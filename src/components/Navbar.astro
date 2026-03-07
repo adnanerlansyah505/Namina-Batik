@@ -1,0 +1,85 @@
+---
+const currentPath = Astro.url.pathname;
+const navLinks = [
+  { href: '/', label: 'Home', isHome: true },
+  { href: '/gallery', label: 'Gallery', isHome: false },
+  { href: '/articles', label: 'Articles', isHome: false },
+  { href: '/contact', label: 'Contact', isHome: false },
+];
+---
+
+<header class="sticky top-0 z-50 bg-batik-cream/95 backdrop-blur-md border-b border-batik-cream-dark/30 shadow-sm">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <a href="/" class="flex items-center gap-2 group">
+        <span class="font-serif text-xl md:text-2xl font-bold text-batik-brown transition-colors duration-300 group-hover:text-batik-gold">
+          Namina Batik
+        </span>
+      </a>
+
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg text-batik-brown hover:bg-batik-cream-dark/50 transition-colors duration-300"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <div
+        id="nav-menu"
+        class="hidden md:flex md:items-center md:gap-8 absolute md:relative top-16 left-0 right-0 md:top-0 bg-batik-cream md:bg-transparent py-4 md:py-0 px-4 md:px-0 border-b md:border-0 border-batik-cream-dark/30 md:border-0"
+      >
+        {navLinks.map((link) => {
+          const isHomeLink = link.isHome;
+          const isOnHomepage = currentPath === '/' || currentPath === '';
+          const isActive = currentPath === link.href || (link.href === '/' && isOnHomepage) || (link.href !== '/' && !link.href.startsWith('#') && currentPath.startsWith(link.href));
+          const shouldScrollToTop = isHomeLink && isOnHomepage;
+
+          if (shouldScrollToTop) {
+            return (
+              <button
+                type="button"
+                class="block py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300 text-batik-gold bg-batik-brown/5 cursor-pointer border-0"
+                id="nav-home-scroll"
+                aria-label="Scroll to top"
+              >
+                {link.label}
+              </button>
+            );
+          }
+
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                'block py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300',
+                isActive
+                  ? 'text-batik-gold bg-batik-brown/5'
+                  : 'text-batik-brown hover:text-batik-gold hover:bg-batik-cream-dark/30',
+              ]}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+    const menu = document.getElementById('nav-menu');
+    menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+    menu?.classList.toggle('flex-col');
+  });
+
+  document.getElementById('nav-home-scroll')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('nav-menu')?.classList.add('hidden');
+    document.getElementById('nav-menu')?.classList.remove('flex');
+  });
+</script>

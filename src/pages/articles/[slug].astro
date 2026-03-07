@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<BaseLayout title={`${article.data.title} | Namina Batik`} description={article.data.description}>
+  <Navbar />
+
+  <main class="min-h-screen">
+    <article class="py-16 md:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="mb-12 animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out forwards;">
+          <p class="text-sm text-batik-gold mb-4">
+            {new Date(article.data.pubDate).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          </p>
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-batik-brown mb-4">
+            {article.data.title}
+          </h1>
+          <p class="text-batik-charcoal/80 text-lg">
+            {article.data.description}
+          </p>
+        </header>
+
+        <div class="prose prose-lg prose-batik max-w-none prose-headings:font-serif prose-headings:text-batik-brown prose-p:text-batik-charcoal/90 prose-a:text-batik-gold hover:prose-a:text-batik-brown prose-strong:text-batik-brown animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.2s forwards;">
+          <Content />
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-batik-cream-dark">
+          <a
+            href="/articles"
+            class="inline-flex items-center gap-2 text-batik-gold hover:text-batik-brown font-medium transition-colors duration-300"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Kembali ke Articles
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>

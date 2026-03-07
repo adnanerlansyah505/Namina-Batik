@@ -1,0 +1,137 @@
+---
+interface Product {
+  id: number;
+  title: string;
+  image: string;
+  alt: string;
+}
+
+interface Props {
+  featured?: boolean;
+  products?: Product[];
+}
+
+const { featured = false, products: productsProp } = Astro.props;
+
+const { products: allProducts } = await import('../data/products.ts');
+const displayProducts = productsProp ?? (featured ? allProducts.slice(0, 5) : allProducts);
+const showCta = featured;
+const showHeader = !productsProp;
+---
+
+<section id="gallery" class="py-16 md:py-24 scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    {showHeader && (
+      <div class="text-center mb-12 animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.1s forwards;">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-batik-brown mb-4">
+          {featured ? 'Koleksi Unggulan' : 'Koleksi Batik'}
+        </h2>
+        <p class="text-batik-charcoal/80 max-w-2xl mx-auto">
+          {featured
+            ? 'Pilihan Batik premium terbaik kami—dari kemeja formal hingga casual.'
+            : 'Jelajahi koleksi Batik premium kami—dari kemeja formal hingga casual, untuk pria dan wanita.'}
+        </p>
+      </div>
+    )}
+
+    <!-- Penambahan kolom grid: dari mulai 2 kolom di HP, hingga 5 kolom di layar besar -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+      {displayProducts.map((product, index) => (
+        <div
+          class="group cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-white animate-fade-in-up"
+          style={`opacity: 0; animation: fadeInUp 0.6s ease-out ${0.1 + index * 0.1}s forwards;`}
+        >
+          <button
+            type="button"
+            class="block w-full text-left focus:outline-none focus:ring-2 focus:ring-batik-gold focus:ring-offset-2 rounded-xl"
+            data-product-id={product.id}
+            data-product-image={product.image}
+            data-product-alt={product.alt}
+            data-product-title={product.title}
+            onclick="window.openGalleryModal(this)"
+          >
+            
+            <div class="aspect-[4/5] overflow-hidden">
+              <img
+                src={product.image}
+                alt={product.alt}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            
+            
+            <div class="p-3 bg-white">
+              <h3 class="font-semibold text-sm text-batik-brown group-hover:text-batik-gold transition-colors duration-300 truncate">
+                {product.title}
+              </h3>
+              <p class="text-xs text-batik-charcoal/70 mt-1">Lihat detail</p>
+            </div>
+          </button>
+        </div>
+      ))}
+    </div>
+
+    {showCta && (
+      <div class="mt-12 text-center animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.5s forwards;">
+        <a
+          href="/gallery"
+          class="inline-block px-8 py-4 bg-batik-gold hover:bg-batik-gold-light text-batik-brown font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        >
+          Lihat Semua Koleksi
+        </a>
+      </div>
+    )}
+  </div>
+</section>
+
+<!-- HTML5 Dialog Lightbox -->
+<dialog id="gallery-dialog" class="fixed inset-0 w-full h-full max-w-none max-h-none p-0 m-0 bg-transparent border-0 backdrop:bg-black/80 open:animate-fade-in">
+  <div class="fixed inset-0 flex items-center justify-center p-4 z-50" onclick="window.closeGalleryModal(event)">
+    <div class="relative max-w-4xl w-full" onclick="event.stopPropagation()">
+      <button
+        type="button"
+        onclick="window.closeGalleryModal()"
+        class="absolute -top-12 right-0 text-white hover:text-batik-gold transition-colors duration-300 p-2 rounded-full hover:bg-white/10"
+        aria-label="Close"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <img id="dialog-image" src="" alt="" class="w-full h-auto rounded-lg shadow-2xl object-contain max-h-[85vh]" />
+      <p id="dialog-title" class="text-white text-center mt-4 text-lg font-serif"></p>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+  window.openGalleryModal = function(button) {
+    const dialog = document.getElementById('gallery-dialog');
+    const img = document.getElementById('dialog-image');
+    const titleEl = document.getElementById('dialog-title');
+    if (dialog && img && titleEl && button) {
+      img.src = button.dataset.productImage;
+      img.alt = button.dataset.productAlt;
+      titleEl.textContent = button.dataset.productTitle;
+      dialog.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  window.closeGalleryModal = function(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const dialog = document.getElementById('gallery-dialog');
+    if (dialog) {
+      dialog.close();
+      document.body.style.overflow = '';
+    }
+  };
+
+  document.getElementById('gallery-dialog')?.addEventListener('close', () => {
+    document.body.style.overflow = '';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') window.closeGalleryModal();
+  });
+</script>

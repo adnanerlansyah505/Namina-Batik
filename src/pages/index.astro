@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import ProductGallery from '../components/ProductGallery.astro';
+---
+
+<BaseLayout>
+  <Navbar />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-batik-brown/90 via-batik-navy/80 to-batik-charcoal/90"></div>
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30z\' fill=\'%23B8860B\' fill-opacity=\'0.03\' fill-rule=\'evenodd\'/%3E%3C/svg%3E')] opacity-50"></div>
+      <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-batik-cream">
+        <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards;">
+          Namina Batik
+        </h1>
+        <p class="text-xl md:text-2xl text-batik-cream/90 mb-4 font-serif italic animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards;">
+          Warisan Budaya, Gaya Kontemporer
+        </p>
+        <p class="text-batik-cream/80 max-w-2xl mx-auto mb-10 text-base md:text-lg animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.8s ease-out 0.5s forwards;">
+          Koleksi Batik premium untuk pria dan wanita. Dibuat dengan dedikasi, dikenakan dengan bangga.
+        </p>
+        <a
+          href="#gallery"
+          class="inline-block px-8 py-4 bg-batik-gold hover:bg-batik-gold-light text-batik-brown font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in-up"
+          style="opacity: 0; animation: fadeInUp 0.8s ease-out 0.6s forwards;"
+        >
+          Lihat Koleksi
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 md:py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div class="animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.2s forwards;">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-batik-brown mb-6">Tentang Namina Batik</h2>
+            <p class="text-batik-charcoal/80 leading-relaxed mb-4">
+              Namina Batik adalah UMKM yang berdedikasi menghadirkan Batik berkualitas tinggi dari Bandung, Indonesia. 
+              Setiap helai kain kami dibuat dengan proses tradisional yang autentik—kombinasi teknik cap dan tulis— 
+              sambil tetap relevan bagi gaya hidup modern.
+            </p>
+            <p class="text-batik-charcoal/80 leading-relaxed mb-6">
+              Kami menggunakan bahan katun prima dan sutera pilihan, dengan motif-motif yang mengambil inspirasi 
+              dari warisan budaya Nusantara. Dari acara formal hingga casual, Namina Batik siap menemani Anda.
+            </p>
+            <ul class="space-y-2 text-batik-brown-light">
+              <li class="flex items-center gap-2">
+                <span class="text-batik-gold">✓</span> Bahan pilihan berkualitas
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-batik-gold">✓</span> Proses tradisional autentik
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-batik-gold">✓</span> Desain elegan & modern
+              </li>
+            </ul>
+          </div>
+          <div class="rounded-2xl overflow-hidden shadow-xl animate-fade-in-up" style="opacity: 0; animation: fadeInUp 0.6s ease-out 0.4s forwards;">
+            <img
+              src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800"
+              alt="Batik premium Namina"
+              class="w-full h-80 md:h-96 object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Gallery Section (Featured) -->
+    <ProductGallery featured={true}  />
+
+    <!-- Visit Store CTA Section -->
+    <section class="py-16 md:py-24 bg-batik-brown text-batik-cream">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-serif text-3xl md:text-4xl font-bold text-batik-gold-light mb-4">Hubungi Kami</h2>
+        <p class="text-batik-cream/90 text-lg leading-relaxed max-w-2xl mx-auto mb-8">
+          Punya pertanyaan seputar koleksi kami, panduan ukuran, atau ingin melakukan pemesanan? Jangan ragu untuk memulai chat dengan tim kami.
+        </p>
+        <a
+          href="/contact"
+          class="inline-block px-8 py-4 bg-batik-gold hover:bg-batik-gold-light text-batik-brown font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        >
+          Chat Kami Sekarang
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ProductGallery from '../../components/ProductGallery.astro';
+import { products } from '../../data/products';
+
+export async function getStaticPaths({ paginate }) {
+  return paginate(products, { pageSize: 9 });
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title={`Gallery${page.currentPage > 1 ? ` - Page ${page.currentPage}` : ''} | Namina Batik`} description="Lihat semua koleksi Batik Namina—kemeja, kebaya, dress, dan lebih banyak lagi untuk pria dan wanita.">
+  <Navbar />
+
+  <main class="min-h-screen">
+    <section class="py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h1 class="font-serif text-3xl md:text-4xl font-bold text-batik-brown mb-4">Koleksi Batik</h1>
+          <p class="text-batik-charcoal/80 text-lg leading-relaxed max-w-2xl mx-auto">
+            Jelajahi koleksi Batik premium kami—dari kemeja formal hingga casual, untuk pria dan wanita.
+          </p>
+        </div>
+
+        <ProductGallery products={page.data} />
+
+        {page.lastPage > 1 && (
+          <nav class="mt-12 flex items-center justify-center gap-4" aria-label="Gallery pagination">
+            {page.url.prev ? (
+              <a
+                href={page.url.prev}
+                class="px-6 py-3 bg-batik-brown text-batik-cream font-medium rounded-lg hover:bg-batik-brown-light transition-colors duration-300"
+              >
+                ← Previous
+              </a>
+            ) : (
+              <span class="px-6 py-3 bg-batik-cream-dark text-batik-charcoal/50 font-medium rounded-lg cursor-not-allowed">
+                ← Previous
+              </span>
+            )}
+            <span class="text-batik-charcoal/80 font-medium">
+              Page {page.currentPage} of {page.lastPage}
+            </span>
+            {page.url.next ? (
+              <a
+                href={page.url.next}
+                class="px-6 py-3 bg-batik-gold text-batik-brown font-medium rounded-lg hover:bg-batik-gold-light transition-colors duration-300"
+              >
+                Next →
+              </a>
+            ) : (
+              <span class="px-6 py-3 bg-batik-cream-dark text-batik-charcoal/50 font-medium rounded-lg cursor-not-allowed">
+                Next →
+              </span>
+            )}
+          </nav>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
