@@ -11,7 +11,14 @@ const navLinks = [
 <header class="sticky top-0 z-50 bg-batik-cream/95 backdrop-blur-md border-b border-batik-cream-dark/30 shadow-sm">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16 md:h-20">
-      <a href="/" class="flex items-center gap-2 group">
+      <a href="/" class="flex items-center gap-3 group">
+        <img
+          src="/images/logo.png"
+          alt="Logo Namina Batik"
+          class="h-9 w-auto md:h-11 object-contain"
+          loading="eager"
+          decoding="async"
+        />
         <span class="font-serif text-xl md:text-2xl font-bold text-batik-brown transition-colors duration-300 group-hover:text-batik-gold">
           Namina Batik
         </span>
@@ -29,7 +36,7 @@ const navLinks = [
 
       <div
         id="nav-menu"
-        class="hidden md:flex md:items-center md:gap-8 absolute md:relative top-16 left-0 right-0 md:top-0 bg-batik-cream md:bg-transparent py-4 md:py-0 px-4 md:px-0 border-b md:border-0 border-batik-cream-dark/30 md:border-0"
+        class="hidden md:flex md:items-center md:gap-8 absolute md:relative top-16 left-0 right-0 md:top-0 bg-batik-cream md:bg-transparent py-4 md:py-0 px-4 md:px-0 border-b md:border-0 border-batik-cream-dark/30"
       >
         {navLinks.map((link) => {
           const isHomeLink = link.isHome;
