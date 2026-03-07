@@ -6,7 +6,7 @@ import ProductGallery from '../../components/ProductGallery.astro';
 import { products } from '../../data/products';
 
 export async function getStaticPaths({ paginate }) {
-  return paginate(products, { pageSize: 9 });
+  return paginate(products, { pageSize: 10 });
 }
 
 const { page } = Astro.props;
