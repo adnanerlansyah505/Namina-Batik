@@ -10,7 +10,7 @@ pubDate: 2024-01-15
 
 ## Awal Perjalanan
 
-Dimulai dari sebuah rumah kecil di Bandung, Jawa Barat, Namina Batik didirikan dengan tekad untuk menghadirkan Batik berkualitas tinggi yang bisa dipakai sehari-hari oleh pria maupun wanita Indonesia modern.
+Dimulai dari sebuah rumah kecil di Cianjur, Jawa Barat, Namina Batik didirikan dengan tekad untuk menghadirkan Batik berkualitas tinggi yang bisa dipakai sehari-hari oleh pria maupun wanita Indonesia modern.
 
 ## Filosofi Dibalik Nama
 
